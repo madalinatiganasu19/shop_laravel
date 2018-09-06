@@ -10,7 +10,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item"><a class="nav-link" href="{{ route('index') }}">{{ __('Home') }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('/') }}">{{ __('Home') }}</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('cart') }}">{{ __('Shopping Cart') }}</a></li>
             </ul>
 
@@ -19,10 +19,7 @@
                 <!-- Authentication Links -->
 
                     <li class="nav-item">
-                        <a class="nav-link" href="">{{ __('Login') }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="">{{ __('Register') }}</a>
+                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                     </li>
 
             </ul>
