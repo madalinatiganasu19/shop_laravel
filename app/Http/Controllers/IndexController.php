@@ -23,7 +23,7 @@ class IndexController extends Controller
         if ($request->get('id')) {
             session()->push('cart', $request->get('id'));
 
-            return redirect()->route('/');
+            return redirect()->route('index');
         }
 
         $query = Product::query();
@@ -34,15 +34,23 @@ class IndexController extends Controller
         return view('pages.index')->with('products', $query->get());
     }
 
+
     /**
      * Display a listing of the session cart resources.
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function cart(Request $request)
+    public function cart(Request $request, Product $product)
     {
-        return view('pages.cart');
+
+        $query = Product::query();
+        if (session('cart')) {
+            $query->whereIn(($product)->getKeyName(), session('cart'));
+        }
+
+        return view('pages.cart')->with('products', $query->get());
     }
+
 
     /**
      * Display a login form.
@@ -52,7 +60,7 @@ class IndexController extends Controller
      */
     public function login(Request $request)
     {
-        //
+        return view('pages.login');
     }
 
 }

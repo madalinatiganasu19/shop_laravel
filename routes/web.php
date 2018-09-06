@@ -13,10 +13,10 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/welcome', function(){
+Route::get('/', function(){
     return view('pages.welcome');
-})->name('welcome');
+})->name('/');
 
-Route::get('/', 'IndexController@index')->name('/');
+Route::get('/index', 'IndexController@index')->name('index');
 Route::get('/cart', 'IndexController@cart')->name('cart');
 Route::get('/login', 'IndexController@login')->name('login');
