@@ -19,3 +19,4 @@ Route::get('/welcome', function(){
 
 Route::resource('/', 'ProductsController');
 
+Route::get('/cart', 'CartController@index')->name('cart');
