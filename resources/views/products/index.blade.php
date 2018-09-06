@@ -5,12 +5,12 @@
     <table>
         @foreach($products as $product)
         <tr>
-            <td><img src="images/{{ $product->image }}"></td>
+            <td><img class="img-thumbnail" src="{{\Illuminate\Support\Facades\Storage::url(('public/images/' . $product->image))}}"></td>
             <td>&nbsp;&nbsp;&nbsp;</td>
             <td>
-                <h5>{{ $product->title }}</h5>
+                <p class="lead">{{ $product->title }}</p>
                 <p>{{ $product->description }}</p>
-                <p>
+                <p class="lead">
                     {{ __("$") }}
                     {{ $product->price }}
                 </p>
