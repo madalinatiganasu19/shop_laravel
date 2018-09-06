@@ -62,26 +62,26 @@ class IndexController extends Controller
             $query = array();
         }
 
+        if ($request->post('checkout')) {
+
+            if (!(session('cart'))) {
+                return redirect()->route('cart');
+
+            } else {
+                $request->validate([
+                    'name' => 'required',
+                    'email' => 'required|email',
+                    'comments' => 'nullable'
+                ]);
+
+                session()->flush();
+                return redirect()->route('index');
+            }
+        }
+
         return view('pages.cart')->with('products', $query);
 
     }
-
-    /**
-     * Validate customer credentials and send a confirmation email
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function checkout(Request $request)
-    {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'comments' => 'nullable'
-        ]);
-
-        return redirect()->route('index');
-    }
-
 
     /**
      * Display a login form.

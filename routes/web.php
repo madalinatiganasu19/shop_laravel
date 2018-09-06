@@ -19,5 +19,5 @@ Route::get('/', function(){
 
 Route::get('/index', 'IndexController@index')->name('index');
 Route::get('/cart', 'IndexController@cart')->name('cart');
-Route::post('/cart', 'IndexController@checkout')->name('checkout');
+Route::post('/cart', 'IndexController@cart')->name('carts');
 Route::get('/login', 'IndexController@login')->name('login');
