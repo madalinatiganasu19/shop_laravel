@@ -13,9 +13,9 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function(){
+Route::get('/welcome', function(){
     return view('pages.welcome');
-})->name('/');
+})->name('welcome');
 
 Route::get('/index', 'IndexController@index')->name('index');
 Route::get('/cart', 'IndexController@cart')->name('cart');
