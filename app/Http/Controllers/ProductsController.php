@@ -17,7 +17,7 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, Product $product)
     {
         if ($request->get('id')) {
             session()->push('cart', $request->get('id'));
@@ -27,7 +27,7 @@ class ProductsController extends Controller
 
         $query = Product::query();
         if (session('cart')) {
-            $query->whereNotIn((new Product)->getKeyName(), session('cart'));
+            $query->whereNotIn(($product)->getKeyName(), session('cart'));
         }
 
         return view('products.index')->with('products', $query->get());
