@@ -38,17 +38,32 @@ class IndexController extends Controller
     /**
      * Display a listing of the session cart resources.
      * @param  \Illuminate\Http\Request $request
+     * @param  \App\Product $product
      * @return \Illuminate\Http\Response
      */
     public function cart(Request $request, Product $product)
     {
+        if ($request->get('id')) {
 
-        $query = Product::query();
-        if (session('cart')) {
-            $query->whereIn(($product)->getKeyName(), session('cart'));
+            $products = session()->pull('cart');
+
+            $id = array_search($request->get('id'), $products);
+            unset($products[$id]);
+
+            session()->put('cart', $products);
+
+            return redirect()->route('cart');
         }
 
-        return view('pages.cart')->with('products', $query->get());
+
+        if (session('cart')) {
+            $query = Product::query()->whereIn(($product)->getKeyName(), session('cart'))->get();
+        } else {
+            $query = array();
+        }
+
+        return view('pages.cart')->with('products', $query);
+
     }
 
 
