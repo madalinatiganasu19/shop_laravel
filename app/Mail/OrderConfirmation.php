@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Product;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -23,11 +24,13 @@ class OrderConfirmation extends Mailable
 
     /**
      * Build the message.
-     *
+     * @param Product $product
      * @return $this
      */
-    public function build()
+    public function build(Product $product)
     {
-        return $this->view('emails.order');
+        $products = $product::query()->whereIn(($product)->getKeyName(), session()->get('cart'))->get();
+
+        return $this->view('emails.order')->with('products', $products);
     }
 }
