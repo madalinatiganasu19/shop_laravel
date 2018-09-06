@@ -17,9 +17,20 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('products.index');
+        if ($request->get('id')) {
+            session()->push('cart', $request->get('id'));
+
+            return redirect('/');
+        }
+
+        $query = Product::query();
+        if (session('cart')) {
+            $query->whereNotIn((new Product)->getKeyName(), session('cart'));
+        }
+
+        return view('products.index')->with('products', $query->get());
     }
 
     /**
