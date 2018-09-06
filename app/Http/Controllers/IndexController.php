@@ -31,11 +31,11 @@ class IndexController extends Controller
             $query->whereNotIn(($product)->getKeyName(), session('cart'));
         }
 
-        return view('products.index')->with('products', $query->get());
+        return view('pages.index')->with('products', $query->get());
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display a listing of the session cart resources.
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
@@ -45,7 +45,7 @@ class IndexController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Display a login form.
      *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
