@@ -34,13 +34,13 @@
     <form class="my-4" method="POST">
         @csrf
         <div class="form-group">
-            <input class="form-control" type="text" name="name" placeholder="{{__('Name')}}" value="">
+            <input class="form-control" type="text" name="name" placeholder="{{__('Name')}}" value="{{ old('name') }}">
         </div>
         <div class="form-group">
-            <input class="form-control" type="text" name="email" placeholder="{{__('Email')}}" value="">
+            <input class="form-control" type="text" name="email" placeholder="{{__('Email')}}" value="{{ old('email') }}">
         </div>
         <div class="form-group">
-            <textarea class="form-control" rows="5" type="text" name="comments" placeholder="{{__('Comments')}}"></textarea>
+            <textarea class="form-control" rows="5" type="text" name="comments" placeholder="{{__('Comments')}}">{{ old('comments') }}</textarea>
         </div>
         <div class="form-group text-right">
             <input class="btn btn-dark" type="submit" name="checkout" value="{{__('Checkout')}}">
