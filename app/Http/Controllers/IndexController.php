@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use App\Product;
+use App\Mail\OrderConfirmation;
 
 class IndexController extends Controller
 {
@@ -41,7 +43,7 @@ class IndexController extends Controller
      * @param  \App\Product $product
      * @return \Illuminate\Http\Response
      */
-    public function cart(Request $request, Product $product)
+    public function cart(Request $request, Product $product, OrderConfirmation $orderConfirmation)
     {
         if ($request->get('id')) {
 
@@ -74,6 +76,7 @@ class IndexController extends Controller
                     'comments' => 'nullable'
                 ]);
 
+                Mail::to($request->input('email'))->send($orderConfirmation);
                 session()->flush();
                 return redirect()->route('index');
             }
