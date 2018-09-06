@@ -16,7 +16,7 @@
                 </p>
             </td>
             <td>&nbsp;&nbsp;&nbsp;</td>
-            <td><a href="?id={{ $product->id }}">{{ __("ADD") }}</a></td>
+            <td><a class="btn btn-dark" href="?id={{ $product->id }}">{{ __("Add to Cart") }}</a></td>
         </tr>
         @endforeach
     </table>
