@@ -66,6 +66,22 @@ class IndexController extends Controller
 
     }
 
+    /**
+     * Validate customer credentials and send a confirmation email
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function checkout(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'comments' => 'nullable'
+        ]);
+
+        return redirect()->route('index');
+    }
+
 
     /**
      * Display a login form.

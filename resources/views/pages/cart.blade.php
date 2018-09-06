@@ -30,7 +30,7 @@
             <input class="form-control" type="text" name="email" placeholder="{{__('Email')}}" value="">
         </div>
         <div class="form-group">
-            <textarea class="form-control" rows="5" type="comments" name="name" placeholder="{{__('Comments')}}"></textarea>
+            <textarea class="form-control" rows="5" type="text" name="comments" placeholder="{{__('Comments')}}"></textarea>
         </div>
         <div class="form-group text-right">
             <input class="btn btn-dark" type="submit" name="checkout" value="{{__('Checkout')}}">
