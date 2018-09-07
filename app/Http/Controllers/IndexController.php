@@ -60,9 +60,9 @@ class IndexController extends Controller
 
 
         if (session('cart')) {
-            $query = Product::query()->whereIn(($product)->getKeyName(), session('cart'))->get();
+            $products = Product::query()->whereIn(($product)->getKeyName(), session('cart'))->get();
         } else {
-            $query = array();
+            $products= array();
         }
 
         if ($request->post('checkout')) {
@@ -83,7 +83,7 @@ class IndexController extends Controller
             }
         }
 
-        return view('pages.cart')->with('products', $query);
+        return view('pages.cart')->with('products', $products);
 
     }
 
