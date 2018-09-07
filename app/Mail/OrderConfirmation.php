@@ -31,6 +31,14 @@ class OrderConfirmation extends Mailable
     {
         $products = $product::query()->whereIn(($product)->getKeyName(), session()->get('cart'))->get();
 
-        return $this->view('emails.order')->with('products', $products);
+        $total=0;
+        foreach ($products as $item){
+            $total += $item->price;
+        }
+
+        return $this->view('emails.order')->with([
+            'products' => $products,
+            'total' => $total,
+        ]);
     }
 }
