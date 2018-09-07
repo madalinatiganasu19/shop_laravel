@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use App\Product;
@@ -94,6 +95,21 @@ class IndexController extends Controller
      */
     public function login(Request $request)
     {
+        if ($request->post('login')) {
+
+            $request->validate([
+                'email' => 'required|email',
+                'password' => 'required|min:6',
+            ]);
+
+            $email = config('app.email');
+            $password = config('app.password');
+
+            if($request->input('email') == $email && $request->input('password') == $password) {
+                return redirect()->route('products');
+            }
+        }
+
         return view('pages.login');
     }
 

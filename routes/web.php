@@ -22,3 +22,7 @@ Route::get('/cart', 'IndexController@cart')->name('cart');
 Route::post('/cart', 'IndexController@cart')->name('checkout');
 Route::get('/login', 'IndexController@login')->name('login');
 Route::post('/login', 'IndexController@login')->name('doLogin');
+
+Route::get('/products', function(){
+    return view('products.index');
+})->name('products');
