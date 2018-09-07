@@ -1,3 +1,4 @@
+<h2>{{__('Hello, ') . $name}}</h2>
 <h3>{{__('Thank you for buying from us.')}}</h3>
 <p>{{__('Here are your order details: ')}}</p>
 
@@ -27,4 +28,6 @@
             <th>{{__('TOTAL: $') . $total}}</th>
         </tr>
 </table>
+
+<p><em>{{__('OBSERVATIONS: ') . $comments}}</em></p>
 

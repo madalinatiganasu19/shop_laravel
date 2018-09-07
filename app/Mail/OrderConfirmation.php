@@ -4,6 +4,7 @@ namespace App\Mail;
 
 use App\Product;
 use Illuminate\Bus\Queueable;
+use Illuminate\Http\Request;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -27,7 +28,7 @@ class OrderConfirmation extends Mailable
      * @param Product $product
      * @return $this
      */
-    public function build(Product $product)
+    public function build(Product $product, Request $request)
     {
         $products = $product::query()->whereIn(($product)->getKeyName(), session()->get('cart'))->get();
 
@@ -39,6 +40,8 @@ class OrderConfirmation extends Mailable
         return $this->view('emails.order')->with([
             'products' => $products,
             'total' => $total,
+            'name' => $request->input('name'),
+            'comments' => $request->input('comments'),
         ]);
     }
 }
