@@ -32,8 +32,8 @@ class OrderConfirmation extends Mailable
     {
         $products = $product::query()->whereIn(($product)->getKeyName(), session()->get('cart'))->get();
 
-        $total=0;
-        foreach ($products as $item){
+        $total = 0;
+        foreach ($products as $item) {
             $total += $item->price;
         }
 

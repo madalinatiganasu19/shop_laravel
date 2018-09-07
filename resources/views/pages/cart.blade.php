@@ -13,7 +13,7 @@
     @endif
 
     <table>
-        @foreach($products as $product)
+        @foreach ($products as $product)
             <tr>
                 <td><img class="img-thumbnail" src="{{\Illuminate\Support\Facades\Storage::url(('images/' . $product->image))}}"></td>
                 <td>&nbsp;&nbsp;&nbsp;</td>

@@ -8,7 +8,7 @@
         <th></th>
         <th>{{ __('PRODUCT DETAILS') }}</th>
     </tr>
-    @foreach($products as $product)
+    @foreach ($products as $product)
         <tr>
             <td><img width="100%" src="{{\Illuminate\Support\Facades\URL::to('/') . \Illuminate\Support\Facades\Storage::url(('images/' . $product->image))}}"></td>
             <td>&nbsp;&nbsp;&nbsp;</td>
