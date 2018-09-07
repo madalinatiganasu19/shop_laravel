@@ -106,6 +106,7 @@ class IndexController extends Controller
             $password = config('app.password');
 
             if($request->input('email') == $email && $request->input('password') == $password) {
+                session()->put('logged', $email);
                 return redirect()->route('products');
             }
         }
