@@ -7,7 +7,16 @@ use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
+    public function __construct()
+    {
+
+    }
+
     public function index(Product $product) {
+
+        if (!session('logged')) {
+            return redirect()->route('login');
+        }
 
         $query = Product::query();
         if (session('cart')) {
@@ -15,5 +24,13 @@ class ProductsController extends Controller
         }
 
         return view('products.index')->with('products', $query->get());
+    }
+
+    public function create() {
+
+        if (!session('logged')) {
+            return redirect()->route('login');
+        }
+        return view('products.create');
     }
 }
