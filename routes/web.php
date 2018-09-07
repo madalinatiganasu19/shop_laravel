@@ -13,7 +13,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function(){
+Route::get('/', function() {
     return view('pages.welcome');
 })->name('welcome');
 
@@ -23,6 +23,9 @@ Route::post('/cart', 'IndexController@cart')->name('checkout');
 Route::get('/login', 'IndexController@login')->name('login');
 Route::post('/login', 'IndexController@login')->name('doLogin');
 
-Route::get('/products', function(){
-    return view('products.index');
-})->name('products');
+Route::get('/products', 'ProductsController@index')->name('products');
+
+Route::get('/logout', function() {
+    session()->flush();
+    return redirect()->route('index');
+})->name('logout');
