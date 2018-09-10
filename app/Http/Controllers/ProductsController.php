@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductsController extends Controller
 {
@@ -12,21 +13,28 @@ class ProductsController extends Controller
 
     }
 
-    public function index(Product $product) {
+    public function products(Request $request) {
 
         if (!session('logged')) {
             return redirect()->route('login');
         }
 
-        $query = Product::query();
-        if (session('cart')) {
-            $query->whereNotIn(($product)->getKeyName(), session('cart'));
+        if ($request->get('id')) {
+
+            $id = $request->get('id');
+            $product = Product::query()->find($id);
+
+            Storage::delete('public/images/' . $product->image);
+            $product->delete();
+
+            return redirect()->route('products');
         }
 
-        return view('products.index')->with('products', $query->get());
+        $products = Product::all();
+        return view('products.index')->with('products', $products);
     }
 
-    public function create() {
+    public function product() {
 
         if (!session('logged')) {
             return redirect()->route('login');

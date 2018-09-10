@@ -23,8 +23,8 @@ Route::post('/cart', 'IndexController@cart')->name('checkout');
 Route::get('/login', 'IndexController@login')->name('login');
 Route::post('/login', 'IndexController@login')->name('doLogin');
 
-Route::get('/products', 'ProductsController@index')->name('products');
-Route::get('/product', 'ProductsController@create')->name('product');
+Route::get('/products', 'ProductsController@products')->name('products');
+Route::get('/product', 'ProductsController@product')->name('product');
 
 Route::get('/logout', function() {
     session()->flush();
