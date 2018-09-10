@@ -11,7 +11,7 @@ class ProductsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(CheckLogState::class);
+
     }
 
     public function products(Request $request) {
@@ -33,7 +33,7 @@ class ProductsController extends Controller
 
     public function product(Request $request) {
 
-        $product = Product::find($request->get('id'));
+        $product = Product::query()->find($request->get('id'));
 
         if ($request->post('save')) {
 
@@ -60,7 +60,7 @@ class ProductsController extends Controller
 
             } else {
 
-                $product = Product::find($request->get('id'));
+                $product = Product::query()->find($request->get('id'));
 
                 $product->title = $request->input('title');
                 $product->description = $request->input('description');
