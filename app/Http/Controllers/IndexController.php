@@ -67,7 +67,7 @@ class IndexController extends Controller
 
         if ($request->post('checkout')) {
 
-            if (!(session('cart'))) {
+            if (!session('cart')) {
                 return redirect()->route('cart');
 
             } else {
@@ -105,7 +105,7 @@ class IndexController extends Controller
             $email = config('app.email');
             $password = config('app.password');
 
-            if($request->input('email') == $email && $request->input('password') == $password) {
+            if($request->input('email') === $email && $request->input('password') === $password) {
                 session()->put('logged', $email);
                 return redirect()->route('products');
             }
