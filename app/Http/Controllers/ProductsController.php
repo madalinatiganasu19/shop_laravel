@@ -34,11 +34,55 @@ class ProductsController extends Controller
         return view('products.index')->with('products', $products);
     }
 
-    public function product() {
+    public function product(Request $request) {
 
         if (!session('logged')) {
             return redirect()->route('login');
         }
-        return view('products.create');
+
+        $product = Product::find($request->get('id'));
+
+        if ($request->post('save')) {
+
+            $request->validate([
+                'title' => 'required',
+                'description' => 'required|min:20',
+                'price' => 'required|numeric',
+                'image' => 'required|image'
+            ]);
+
+            if (!$request->get('id')) {
+
+                $product = new Product();
+                $product->title = $request->input('title');
+                $product->description = $request->input('description');
+                $product->price = $request->input('price');
+                $product->image =  $request->file('image')->getClientOriginalName();
+
+                $product->save();
+
+                $request->file('image')->storeAs('public/images', $product->image);
+
+                return redirect()->route('products');
+
+            } else {
+
+                $product = Product::find($request->get('id'));
+
+                $product->title = $request->input('title');
+                $product->description = $request->input('description');
+                $product->price = $request->input('price');
+                $product->image =  $request->file('image')->getClientOriginalName();
+
+                $product->save();
+
+                $request->file('image')->storeAs('public/images', $product->image);
+
+                return redirect()->route('products');
+            }
+        }
+
+        return view('products.create')->with('product', $product);
+
     }
 }

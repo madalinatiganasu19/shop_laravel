@@ -25,6 +25,7 @@ Route::post('/login', 'IndexController@login')->name('doLogin');
 
 Route::get('/products', 'ProductsController@products')->name('products');
 Route::get('/product', 'ProductsController@product')->name('product');
+Route::post('/product', 'ProductsController@product')->name('save');
 
 Route::get('/logout', function() {
     session()->flush();
