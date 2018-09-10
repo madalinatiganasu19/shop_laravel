@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\CheckLogState;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -10,14 +11,10 @@ class ProductsController extends Controller
 {
     public function __construct()
     {
-
+        $this->middleware(CheckLogState::class);
     }
 
     public function products(Request $request) {
-
-        if (!session('logged')) {
-            return redirect()->route('login');
-        }
 
         if ($request->get('id')) {
 
@@ -35,10 +32,6 @@ class ProductsController extends Controller
     }
 
     public function product(Request $request) {
-
-        if (!session('logged')) {
-            return redirect()->route('login');
-        }
 
         $product = Product::find($request->get('id'));
 
