@@ -19,15 +19,15 @@ Route::get('/', function() {
 
 Route::get('/index', 'IndexController@index')->name('index');
 Route::get('/cart', 'IndexController@cart')->name('cart');
-Route::post('/cart', 'IndexController@cart')->name('checkout');
 Route::get('/login', 'IndexController@login')->name('login');
+Route::get('/logout', 'IndexController@logout')->name('logout');
+
+Route::post('/cart', 'IndexController@cart')->name('checkout');
 Route::post('/login', 'IndexController@login')->name('doLogin');
 
 Route::get('/products', 'ProductsController@products')->name('products');
 Route::get('/product', 'ProductsController@product')->name('product');
+
 Route::post('/product', 'ProductsController@product')->name('save');
 
-Route::get('/logout', function() {
-    session()->flush();
-    return redirect()->route('index');
-})->name('logout');
+

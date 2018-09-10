@@ -114,4 +114,9 @@ class IndexController extends Controller
         return view('pages.login');
     }
 
+    public function logout() {
+        session()->flush();
+        return redirect()->route('index');
+    }
+
 }
