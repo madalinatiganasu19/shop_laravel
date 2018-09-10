@@ -78,7 +78,7 @@ class IndexController extends Controller
                 ]);
 
                 Mail::to($request->input('email'))->send($orderConfirmation);
-                session()->flush();
+                session()->forget('cart');
                 return redirect()->route('index');
             }
         }
