@@ -31,4 +31,5 @@ Route::get('/product', 'ProductsController@product')->name('product')->middlewar
 
 Route::post('/product', 'ProductsController@product')->name('save');
 
-
+Route::get('orders', 'OrdersController@orders')->name('orders');
+Route::get('order', 'OrdersController@order')->name('order');
