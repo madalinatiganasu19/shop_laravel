@@ -19,9 +19,7 @@
         </div>
 
         <div class="form-group">
-            <textarea class="form-control" rows="5" type="text" name="description" placeholder="{{__('Description')}}">
-                {{ request('id') ? old('description', $product->description) : old('description') }}
-            </textarea>
+            <textarea class="form-control" rows="5" type="text" name="description" placeholder="{{__('Description')}}">{{ request('id') ? old('description', $product->description) : old('description') }}</textarea>
         </div>
 
 
