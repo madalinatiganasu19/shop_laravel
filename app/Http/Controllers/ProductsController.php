@@ -50,26 +50,22 @@ class ProductsController extends Controller
                 $product->title = $request->input('title');
                 $product->description = $request->input('description');
                 $product->price = $request->input('price');
-                $product->image =  $request->file('image')->getClientOriginalName();
+                $product->image =  $request->file('image')->store('');
 
                 $product->save();
-
-                $request->file('image')->storeAs('public/images', $product->image);
+                $request->file('image')->store('public/images');
 
                 return redirect()->route('products');
 
             } else {
 
-                $product = Product::query()->find($request->get('id'));
-
                 $product->title = $request->input('title');
                 $product->description = $request->input('description');
                 $product->price = $request->input('price');
-                $product->image =  $request->file('image')->getClientOriginalName();
+                $product->image =  $request->file('image')->store('');
 
                 $product->save();
-
-                $request->file('image')->storeAs('public/images', $product->image);
+                $request->file('image')->store('public/images');
 
                 return redirect()->route('products');
             }

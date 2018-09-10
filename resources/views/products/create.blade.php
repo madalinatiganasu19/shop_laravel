@@ -32,7 +32,7 @@
             <div class="custom-file">
                 <input type="file" name="image" class="custom-file-input" id="validatedCustomFile">
                 <label class="custom-file-label" for="validatedCustomFile">{{ __('Choose file...') }}</label>
-                <div></div>
+                <div>{{ request('id') ?  __('Image: ') . $product->image : "" }}</div>
             </div>
         </div>
 
