@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Middleware\CheckLogState;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -28,7 +27,7 @@ class ProductsController extends Controller
         }
 
         $products = Product::all();
-        return view('products.index')->with('products', $products);
+        return view('products.products')->with('products', $products);
     }
 
     public function product(Request $request) {
@@ -71,7 +70,7 @@ class ProductsController extends Controller
             }
         }
 
-        return view('products.create')->with('product', $product);
+        return view('products.product')->with('product', $product);
 
     }
 }
