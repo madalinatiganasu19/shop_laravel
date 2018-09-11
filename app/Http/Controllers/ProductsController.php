@@ -36,38 +36,36 @@ class ProductsController extends Controller
 
         if ($request->post('save')) {
 
-            $request->validate([
-                'title' => 'required',
-                'description' => 'required|min:20',
-                'price' => 'required|numeric',
-                'image' => 'required|image'
-            ]);
-
             if (!$request->get('id')) {
-
+                $request->validate([
+                    'title' => 'required',
+                    'description' => 'required|min:20',
+                    'price' => 'required|numeric',
+                    'image' => 'required|image'
+                ]);
                 $product = new Product();
-                $product->title = $request->input('title');
-                $product->description = $request->input('description');
-                $product->price = $request->input('price');
-                $product->image =  $request->file('image')->store('');
-
-                $product->save();
-                $request->file('image')->store('public/images');
-
-                return redirect()->route('products');
 
             } else {
-
-                $product->title = $request->input('title');
-                $product->description = $request->input('description');
-                $product->price = $request->input('price');
-                $product->image =  $request->file('image')->store('');
-
-                $product->save();
-                $request->file('image')->store('public/images');
-
-                return redirect()->route('products');
+                $request->validate([
+                    'title' => 'required',
+                    'description' => 'required|min:20',
+                    'price' => 'required|numeric',
+                    'image' => 'nullable|image'
+                ]);
             }
+
+            $product->title = $request->input('title');
+            $product->description = $request->input('description');
+            $product->price = $request->input('price');
+
+            if ($request->file('image')) {
+                $product->image =  $request->file('image')->store('');
+                $request->file('image')->store('public/images');
+            }
+
+            $product->save();
+
+            return redirect()->route('products');
         }
 
         return view('products.product')->with('product', $product);

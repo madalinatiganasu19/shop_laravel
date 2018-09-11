@@ -15,16 +15,16 @@
     <form class="my-4" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
-            <input class="form-control" type="text" name="title" placeholder="{{__('Title')}}" value="{{ request('id') ? old('title', $product->title) : old('title') }}">
+            <input class="form-control" type="text" name="title" placeholder="{{__('Title')}}" value="{{ request('id') ? request('title', $product->title) : request('title') }}">
         </div>
 
         <div class="form-group">
-            <textarea class="form-control" rows="5" type="text" name="description" placeholder="{{__('Description')}}">{{ request('id') ? old('description', $product->description) : old('description') }}</textarea>
+            <textarea class="form-control" rows="5" type="text" name="description" placeholder="{{__('Description')}}">{{ request('id') ? request('description', $product->description) : request('description') }}</textarea>
         </div>
 
 
         <div class="form-group">
-            <input class="form-control" type="text" name="price" placeholder="{{__('Price')}}" value="{{ request('id') ? old('price', $product->price) : old('price') }}">
+            <input class="form-control" type="text" name="price" placeholder="{{__('Price')}}" value="{{ request('id') ? request('price', $product->price) : request('price') }}">
         </div>
 
 
@@ -32,7 +32,6 @@
             <div class="custom-file">
                 <input type="file" name="image" class="custom-file-input" id="validatedCustomFile">
                 <label class="custom-file-label" for="validatedCustomFile">{{ __('Choose file...') }}</label>
-                <div>{{ request('id') ?  __('Image: ') . $product->image : "" }}</div>
             </div>
         </div>
 
@@ -40,5 +39,11 @@
             <input class="btn btn-dark" type="submit" name="save" value="{{__('Save')}}">
         </div>
     </form>
+
+    <div>
+        @if (request()->get('id'))
+            <img class="img-thumbnail" width="300rem" src="{{ \Illuminate\Support\Facades\Storage::url(('images/' . $product->image)) }}">
+        @endif
+    </div>
 
 @endsection
