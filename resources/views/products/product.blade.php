@@ -23,7 +23,7 @@
         </div>
 
         <div class="form-group">
-            <input class="form-control" type="text" name="price" placeholder="{{__('Price')}}" value="{{ request('price',$product->price) }}">
+            <input class="form-control" type="text" name="price" placeholder="{{__('Price')}}" value="{{ request('id') ? old('price', $product->price) : old('price') }}">
         </div>
 
         <div class="form-group">
