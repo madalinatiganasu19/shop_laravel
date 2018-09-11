@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
+use App\Order;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use App\Product;
@@ -74,9 +74,20 @@ class IndexController extends Controller
                 $request->validate([
                     'name' => 'required',
                     'email' => 'required|email',
-                    'comments' => 'nullable'
+                    'comments' => 'nullable|min:2'
                 ]);
 
+                //create a new order and store it to database
+                $order = new Order();
+                $order->name = $request->input('name');
+                $order->email = $request->input('email');
+                $order->comments = $request->input('comments') ? $request->input('comments') : "";
+                $order->save();
+
+                //populate the pivot table
+                $order->products()->attach($products);
+
+                //send email
                 Mail::to($request->input('email'))->send($orderConfirmation);
                 session()->forget('cart');
                 return redirect()->route('index');
@@ -115,7 +126,7 @@ class IndexController extends Controller
     }
 
     public function logout() {
-        session()->flush();
+        session()->forget('logged');
         return redirect()->route('index');
     }
 
