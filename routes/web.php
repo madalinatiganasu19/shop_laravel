@@ -31,5 +31,5 @@ Route::get('/product', 'ProductsController@product')->name('product')->middlewar
 
 Route::post('/product', 'ProductsController@product')->name('save');
 
-Route::get('orders', 'OrdersController@orders')->name('orders')->middleware(CheckLogState::class);
-Route::get('order', 'OrdersController@order')->name('order')->middleware(CheckLogState::class);
+Route::get('/orders', 'OrdersController@orders')->name('orders')->middleware(CheckLogState::class);
+Route::get('/order', 'OrdersController@order')->name('order')->middleware(CheckLogState::class);
