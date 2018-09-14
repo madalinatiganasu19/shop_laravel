@@ -95,7 +95,7 @@
                 // First hide all the pages
                 $('.page').hide();
 
-                switch(window.location.hash) {
+                switch (window.location.hash) {
 
                     case '#cart':
                         // Show the cart page
@@ -123,7 +123,7 @@
 
                         });
 
-                        $( ".login-form" ).on( "submit", function( event ) {
+                        $(".login-form").on("submit", function (event) {
 
                             event.preventDefault();
 
@@ -159,7 +159,7 @@
                             dataType: 'json',
                             success: function (response) {
                                 // Render the orders in the orders list
-                                $('.orders .list').html(renderOrders(response, 'orders'));
+                                $('.orders .list').html(renderOrders(response, 'order'));
                             }
                         });
                         break;
@@ -173,7 +173,7 @@
                             dataType: 'json',
                             success: function (response) {
                                 // Render the products in the order list
-                                $('.order .list').html(renderList(response, 'order'));
+                                $('.order .list').html(renderList(response));
                             }
                         });
                         break;
@@ -183,16 +183,30 @@
                         // Show the index page
                         $('.index').show();
 
+                        if (getUrlVars().id) {
+                            $.ajax('/index' ,{
+                                data: {'id': getUrlVars().id},
+                                dataType: 'json',
+                                success: function (response) {
+                                    location.href = '#';
+                                }
+                            });
+                            break;
+
+                        }
+
                         // Load the index products from the servers
                         $.ajax('/index', {
                             dataType: 'json',
                             success: function (response) {
                                 // Render the products in the index list
                                 $('.index .list').html(renderList(response, ''));
-                                $('.custom-column').append('');
+
                             }
                         });
                         break;
+
+
                 }
             };
 
