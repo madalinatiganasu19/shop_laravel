@@ -14,12 +14,26 @@
         <!-- The cart element where the products list is rendered -->
         <table class="list"></table>
 
+        <form class="checkoutForm my-4" method="POST">
+            @csrf
+            <div class="form-group">
+                <input class="form-control name" type="text" name="name" placeholder="{{__('Name')}}">
+            </div>
+            <div class="form-group">
+                <input class="form-control email" type="text" name="email" placeholder="{{__('Email')}}">
+            </div>
+            <div class="form-group">
+                <textarea class="form-control comments" rows="5" type="text" name="comments" placeholder="{{__('Comments')}}"></textarea>
+            </div>
+            <div class="form-group text-right">
+                <input class="btn btn-dark" type="submit" name="checkout" value="{{__('Checkout')}}">
+            </div>
+        </form>
     </div>
 
     <!-- The cart page -->
     <div class="page login">
         <!-- The cart element where the products list is rendered -->
-
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card my-5">
@@ -30,19 +44,19 @@
                             @csrf
                             <div class="form-group">
                                 <div class="col-md-6 offset-3">
-                                    <input type="text" id ="email" class="form-control" name="email" placeholder="{{__('E-Mail Address')}}" value="{{ old('email') }}">
+                                    <input type="text" id ="email" class="form-control" placeholder="{{__('E-Mail Address')}}">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="col-md-6 offset-3">
-                                    <input type="password" id="password" class="form-control" name="password" placeholder="{{__('Password')}}">
+                                    <input type="password" id="password" class="form-control" placeholder="{{__('Password')}}">
                                 </div>
                             </div>
 
                             <div class="form-group mb-0">
                                 <div class="col-md-8 offset-md-3">
-                                    <input type="submit" id="loginBtn" class="btn btn-dark" name="login" value="{{__('Login')}}">
+                                    <input type="submit" id="loginBtn" class="btn btn-dark" value="{{__('Login')}}">
                                 </div>
                             </div>
                         </form>
@@ -50,7 +64,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
     <!-- The products page -->
@@ -58,6 +71,28 @@
         <!-- The index element where the products list is rendered -->
         <table class="list"></table>
 
+    </div>
+
+    <div class="page product">
+        <!-- The index element where the products list is rendered -->
+        <form class="my-4" method="POST">
+            @csrf
+            <div class="form-group">
+                <input class="form-control" type="text" id="name" placeholder="{{__('Title')}}">
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" rows="5" type="text" id="comments" placeholder="{{__('Description')}}"></textarea>
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" id="email" placeholder="{{__('Price')}}">
+            </div>
+            <div class="form-group">
+                <input type="file">
+            </div>
+            <div class="form-group text-right">
+                <input class="btn btn-dark" type="submit" id="checkout" value="{{__('Save')}}">
+            </div>
+        </form>
     </div>
 
     <div class="page orders">

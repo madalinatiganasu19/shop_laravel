@@ -134,7 +134,6 @@
                             success: function (response) {
                                 // Render the products in the cart list
                                 $('.cart .list').html(renderList(response, 'cart'));
-                                $('.custom-column').append('');
                             }
                         });
                         break;
@@ -148,18 +147,13 @@
                             success: function (response) {
                                 //
                             }
-
                         });
 
                         $(".login-form").on("submit", function (event) {
-
                             event.preventDefault();
 
                             email = $('#email').val();
                             password = $('#password').val();
-
-                            console.log(email + "\n" + password);
-
                         });
 
                         break;
@@ -173,8 +167,18 @@
                             success: function (response) {
                                 // Render the products in the products list
                                 $('.products .list').html(renderList(response, 'products'));
-                                $('.custom-column').append('');
+                            }
+                        });
+                        break;
 
+                    case '#product':
+                        // Show the products page
+                        $('.product').show();
+                        // Load the products products from the server
+                        $.ajax('/product', {
+                            dataType: 'json',
+                            success: function (response) {
+                                //
                             }
                         });
                         break;
