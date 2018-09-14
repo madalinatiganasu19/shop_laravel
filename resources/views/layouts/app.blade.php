@@ -128,14 +128,29 @@
                     case '#cart':
                         // Show the cart page
                         $('.cart').show();
-                        // Load the cart products from the server
-                        $.ajax('/cart', {
-                            dataType: 'json',
-                            success: function (response) {
-                                // Render the products in the cart list
-                                $('.cart .list').html(renderList(response, 'cart'));
-                            }
-                        });
+
+                            // Load the cart products from the server
+                            $.ajax('/cart', {
+                                dataType: 'json',
+                                success: function (response) {
+                                    // Render the products in the cart list
+                                    $('.cart .list').html(renderList(response, 'cart'));
+                                }
+                            });
+
+                        break;
+
+                    case '#cart?id='+getUrlVars().id+'':
+                        //
+                        if (getUrlVars().id) {
+                            $.ajax('/cart', {
+                                data: {'id': getUrlVars().id},
+                                dataType: 'json',
+                                success: function (response) {
+                                    location.href = '#cart';
+                                }
+                            });
+                        }
                         break;
 
                     case '#login':
@@ -224,7 +239,6 @@
                                 }
                             });
                             break;
-
                         } else {
 
                             // Load the index products from the servers

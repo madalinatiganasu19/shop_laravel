@@ -78,19 +78,19 @@
         <form class="my-4" method="POST">
             @csrf
             <div class="form-group">
-                <input class="form-control" type="text" id="name" placeholder="{{__('Title')}}">
+                <input class="form-control title" type="text" placeholder="{{__('Title')}}">
             </div>
             <div class="form-group">
-                <textarea class="form-control" rows="5" type="text" id="comments" placeholder="{{__('Description')}}"></textarea>
+                <textarea class="form-control description" rows="5" type="text" placeholder="{{__('Description')}}"></textarea>
             </div>
             <div class="form-group">
-                <input class="form-control" type="text" id="email" placeholder="{{__('Price')}}">
+                <input class="form-control price" type="text" placeholder="{{__('Price')}}">
             </div>
             <div class="form-group">
                 <input type="file">
             </div>
             <div class="form-group text-right">
-                <input class="btn btn-dark" type="submit" id="checkout" value="{{__('Save')}}">
+                <input class="btn btn-dark" type="submit" value="{{__('Save')}}">
             </div>
         </form>
     </div>
