@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class OrdersController extends Controller
 {
-    public function orders() {
+    public function orders(Request $request) {
         $orders = new Order();
 
         $orders = DB::table($orders->getTable())
@@ -17,6 +17,10 @@ class OrdersController extends Controller
                             ->select('orders.*', DB::raw('SUM(products.price) as total'))
                             ->groupBy('orders.id')
                             ->get();
+
+        if ($request->ajax()) {
+            return $orders;
+        }
 
         return view('orders.orders')->with([
             'orders'=> $orders,
@@ -27,6 +31,11 @@ class OrdersController extends Controller
 
         $order = Order::query()->find($request->get('id'));
         $products = $order->products;
+
+        if ($request->ajax()) {
+            return $products;
+        }
+
         return view('orders.order')->with('products', $products);
     }
 }

@@ -27,6 +27,11 @@ class ProductsController extends Controller
         }
 
         $products = Product::all();
+
+        if ($request->ajax()) {
+            return $products;
+        }
+
         return view('products.products')->with('products', $products);
     }
 
@@ -66,6 +71,10 @@ class ProductsController extends Controller
             $product->save();
 
             return redirect()->route('products');
+        }
+
+        if ($request->ajax()) {
+            return $product;
         }
 
         return view('products.product')->with('product', $product);

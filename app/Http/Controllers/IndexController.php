@@ -33,7 +33,9 @@ class IndexController extends Controller
         if (session('cart')) {
             $query->whereNotIn(($product)->getKeyName(), session('cart'));
         }
-
+        if ($request->ajax()) {
+            return $query->get();
+        }
         return view('pages.index')->with('products', $query->get());
     }
 
@@ -94,6 +96,10 @@ class IndexController extends Controller
             }
         }
 
+        if ($request->ajax()) {
+            return $products;
+        }
+
         return view('pages.cart')->with('products', $products);
 
     }
@@ -128,6 +134,10 @@ class IndexController extends Controller
     public function logout() {
         session()->forget('logged');
         return redirect()->route('index');
+    }
+
+    public function spa() {
+        return view('pages.spa');
     }
 
 }
