@@ -138,10 +138,31 @@
                                 }
                             });
 
+                            // Send email
+
+                            $('.checkout-form').submit(function(event) {
+                                event.preventDefault();
+
+                                formData = $('.checkout-form').serialize();
+
+                                $.ajax('/cart',  {
+                                    dataType: 'json',
+                                    type: 'POST',
+                                    data: formData,
+                                    success: function (response) {
+                                        //console.log(response);
+                                    },
+                                    error: function (response) {
+
+                                    }
+                                });
+
+                            });
+
                         break;
 
                     case '#cart?id='+getUrlVars().id+'':
-                        //
+                        //remove product from cart
                         if (getUrlVars().id) {
                             $.ajax('/cart', {
                                 data: {'id': getUrlVars().id},
@@ -164,7 +185,7 @@
                             }
                         });
 
-                        $(".login-form").on("submit", function (event) {
+                        $(".login-form").submit(function (event) {
                             event.preventDefault();
 
                             email = $('#email').val();
@@ -186,14 +207,44 @@
                         });
                         break;
 
-                    case '#product':
-                        // Show the products page
+                    case '#products?id='+getUrlVars().id+'':
+                        //take product id
+                        id = getUrlVars().id;
+                        // Delete product
+                        $.ajax('/products', {
+                            dataType: 'json',
+                            data: {'id': getUrlVars().id},
+                            success: function (response) {
+                                // Render the products in the order list
+                                location.href = '#products';
+                            }
+                        });
+                        break;
+
+                    case '#product?id='+getUrlVars().id+'':
+                        // Show the product page
                         $('.product').show();
-                        // Load the products products from the server
+                        // Load product details from the server and populate the form
                         $.ajax('/product', {
                             dataType: 'json',
+                            data: {'id': getUrlVars().id},
                             success: function (response) {
                                 //
+                            }
+                        });
+                        break;
+
+                    case '#product':
+                        // Show the product page
+                        $('.product').show();
+                        //
+                        $.ajax('/product', {
+                            dataType: 'json',
+                            type: 'post',
+                            success: function (response) {
+                                $('form').submit(function (event) {
+                                    event.preventDefault();
+                                })
                             }
                         });
                         break;
@@ -211,13 +262,14 @@
                         });
                         break;
 
-                    case '#order':
+                    case '#order?id='+getUrlVars().id+'':
                         // Show the order page
                         $('.order').show();
                         id = getUrlVars().id;
                         // Load the order products from the server
                         $.ajax('/order', {
                             dataType: 'json',
+                            data: {'id': getUrlVars().id},
                             success: function (response) {
                                 // Render the products in the order list
                                 $('.order .list').html(renderList(response, 'order'));

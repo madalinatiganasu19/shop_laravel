@@ -14,7 +14,7 @@
         <!-- The cart element where the products list is rendered -->
         <table class="list"></table>
 
-        <form class="checkoutForm my-4" method="POST">
+        <form class="checkout-form my-4" method="POST">
             @csrf
             <div class="form-group">
                 <input class="form-control name" type="text" name="name" placeholder="{{__('Name')}}">
@@ -26,7 +26,7 @@
                 <textarea class="form-control comments" rows="5" type="text" name="comments" placeholder="{{__('Comments')}}"></textarea>
             </div>
             <div class="form-group text-right">
-                <input class="btn btn-dark" type="submit" name="checkout" value="{{__('Checkout')}}">
+                <input class="btn btn-dark checkout" type="submit" name="checkout" value="{{__('Checkout')}}">
             </div>
         </form>
     </div>
