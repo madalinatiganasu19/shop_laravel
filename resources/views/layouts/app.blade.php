@@ -32,11 +32,11 @@
 
             return vars;
         }
-        var urlVars = getUrlVars();
+
 
         $(document).ready(function () {
 
-            function renderList(products, href) {
+            function renderList(products, location) {
                 html = [];
 
                 $.each(products, function (key, product) {
@@ -49,16 +49,35 @@
                         '<p>' + product.description + '</p>',
                         '<p class="lead"> {{ __('$') }}' + product.price + '</p>',
                         '</td>',
-                        '<td>&nbsp;&nbsp;&nbsp;</td>',
-                        '<td class="custom-column"><a href="#'+href+'?id='+ product.id +'" class="btn btn-sm btn-dark">{{__('Add to Cart')}}</a></td>',
-                        '</tr>'
+                        '<td>&nbsp;&nbsp;&nbsp;</td>'
                     ].join('');
+
+                    if (location === '') {
+                        html += [
+                            '<td class="text-center"><a href="#?id='+ product.id +'" class="btn btn-sm btn-dark">{{__('Add to Cart')}}</a></td>',
+                            '</tr>'
+                        ].join('');
+                    } else if (location === 'cart') {
+                        html += [
+                            '<td class="text-center"><a href="#cart?id='+ product.id +'" class="btn btn-sm btn-dark">{{__('Remove from Cart')}}</a></td>',
+                            '</tr>'
+                        ].join('');
+                    } else if (location === 'products') {
+                        html += [
+                            '<td class="text-center">' +
+                                '<a href="#product?id='+ product.id +'" class="btn btn-sm btn-success my-1">{{__('Update')}}</a>' +
+                                '<a href="#products?id='+ product.id +'" class="btn btn-sm btn-danger my-1">{{__('Delete')}}</a>' +
+                            '</td>',
+                            '</tr>'
+                        ].join('');
+                    }
+
                 });
 
                 return html;
             }
 
-            function renderOrders(orders, href) {
+            function renderOrders(orders, location) {
                 html = [
                     '<tr class="bg-dark text-white text-center">',
                     '<th><p class="lead">{{__('NAME')}}</p></th>',
@@ -79,10 +98,19 @@
                         '<td><p>' + order.email + '</p></td>',
                         '<td>&nbsp;&nbsp;&nbsp;</td>',
                         '<td><p > {{ __("$") }}' + order.total + '</p></td>',
-                        '<td>&nbsp;&nbsp;&nbsp;</td>',
-                        '<td><a href="#'+href+'?id='+ order.id +'" class="btn btn-sm btn-dark">{{__('View Order')}}</a></td>',
-                        '</tr>'
+                        '<td>&nbsp;&nbsp;&nbsp;</td>'
                     ].join('');
+
+                    if (location === 'orders') {
+                        html += [
+                            '<td class="text-center"><a href="#order?id='+ order.id +'" class="btn btn-sm btn-dark">{{__('View Order')}}</a></td>',
+                            '</tr>'
+                        ].join('');
+                    } else if (location === 'order') {
+                        html += [
+                            '</tr>'
+                        ].join('');
+                    }
                 });
 
                 return html;
@@ -159,7 +187,7 @@
                             dataType: 'json',
                             success: function (response) {
                                 // Render the orders in the orders list
-                                $('.orders .list').html(renderOrders(response, 'order'));
+                                $('.orders .list').html(renderOrders(response, 'orders'));
                             }
                         });
                         break;
@@ -167,13 +195,13 @@
                     case '#order':
                         // Show the order page
                         $('.order').show();
-                        id = getUrlVars()["id"];
+                        id = getUrlVars().id;
                         // Load the order products from the server
                         $.ajax('/order', {
                             dataType: 'json',
                             success: function (response) {
                                 // Render the products in the order list
-                                $('.order .list').html(renderList(response));
+                                $('.order .list').html(renderList(response, 'order'));
                             }
                         });
                         break;
