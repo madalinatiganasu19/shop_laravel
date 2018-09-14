@@ -25,6 +25,9 @@ class IndexController extends Controller
     {
         if ($request->get('id')) {
             session()->push('cart', $request->get('id'));
+            if ($request->ajax()) {
+                return ['success' => true];
+            }
 
             return redirect()->route('index');
         }

@@ -193,20 +193,20 @@
                             });
                             break;
 
+                        } else {
+
+                            // Load the index products from the servers
+                            $.ajax('/index', {
+                                dataType: 'json',
+                                success: function (response) {
+                                    // Render the products in the index list
+                                    $('.index .list').html(renderList(response, ''));
+
+                                }
+                            });
+
                         }
-
-                        // Load the index products from the servers
-                        $.ajax('/index', {
-                            dataType: 'json',
-                            success: function (response) {
-                                // Render the products in the index list
-                                $('.index .list').html(renderList(response, ''));
-
-                            }
-                        });
                         break;
-
-
                 }
             };
 
