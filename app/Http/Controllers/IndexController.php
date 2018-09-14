@@ -60,6 +60,10 @@ class IndexController extends Controller
 
             session()->put('cart', $products);
 
+            if ($request->ajax()) {
+                return ['success' => true];
+            }
+
             return redirect()->route('cart');
         }
 
