@@ -82,20 +82,22 @@
         <!-- The index element where the products list is rendered -->
         <form class="my-4" method="POST">
             @csrf
+            <input type="hidden" name="save" value="1">
+
             <div class="form-group">
-                <input class="form-control title" type="text" placeholder="{{__('Title')}}">
+                <input class="form-control title" type="text" name="title" placeholder="{{__('Title')}}">
             </div>
             <div class="form-group">
-                <textarea class="form-control description" rows="5" type="text" placeholder="{{__('Description')}}"></textarea>
+                <textarea class="form-control description" rows="5" type="text" name="description" placeholder="{{__('Description')}}"></textarea>
             </div>
             <div class="form-group">
-                <input class="form-control price" type="text" placeholder="{{__('Price')}}">
+                <input class="form-control price" type="text" name="price" placeholder="{{__('Price')}}">
             </div>
             <div class="form-group">
-                <input type="file">
+                <input type="file" name="image">
             </div>
             <div class="form-group text-right">
-                <input class="btn btn-dark" type="submit" value="{{__('Save')}}">
+                <input class="btn btn-dark" type="submit" name="save" value="{{__('Save')}}">
             </div>
         </form>
     </div>

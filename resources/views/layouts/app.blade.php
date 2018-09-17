@@ -294,6 +294,19 @@
                         });
                         break;
 
+                    case '#logout':
+                        //logout
+                        $.ajax('/logout',  {
+                            dataType: 'json',
+
+                            success: function (response) {
+                                if (response.success) {
+                                    location.href = '#';
+
+                                }
+                            }
+                        });
+
                     default:
                         // If all else fails, always default to index
                         // Show the index page

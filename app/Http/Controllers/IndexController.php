@@ -155,6 +155,10 @@ class IndexController extends Controller
 
     public function logout(Request $request) {
         session()->forget('logged');
+
+        if ($request->ajax()) {
+            return ['success' => true];
+        }
         return redirect()->route('index');
     }
 
