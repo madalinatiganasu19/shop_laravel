@@ -108,7 +108,7 @@
             </div>
         </form>
 
-        <div>
+        <div class="placeholder">
             @if (request()->get('id'))
                 <img class="img-thumbnail" width="300rem" src="{{ \Illuminate\Support\Facades\Storage::url(('images/' . $product->image)) }}">
             @endif

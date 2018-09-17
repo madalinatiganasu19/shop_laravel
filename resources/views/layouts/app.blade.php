@@ -238,22 +238,16 @@
                         });
                         break;
 
-                    case '#product?id='+getUrlVars().id+'':
+                    case '#product':
                         // Show the product page
                         $('.product').show();
-                        // Load product details from the server and populate the form
+
                         $.ajax('/product', {
                             dataType: 'json',
-                            data: {'id': getUrlVars().id},
                             success: function (response) {
                                 //
                             }
                         });
-                        break;
-
-                    case '#product':
-                        // Show the product page
-                        $('.product').show();
                         //
                         $('.add-product').submit(function(event) {
                             event.preventDefault();
@@ -267,15 +261,56 @@
                                 contentType: false,
                                 processData: false,
                                 success: function (response) {
-                                    console.log("success");
+                                    location.href = '#products';
                                 },
                                 error: function (response) {
-                                    console.log("fail");
+                                    //
                                 }
                             });
 
                         });
+                        break;
 
+                    case '#product?id='+getUrlVars().id+'':
+                        // Show the product page
+                        $('.product').show();
+                        // Load product details from the server and populate the form
+                        $.ajax('/product', {
+                            dataType: 'json',
+                            data: {'id': getUrlVars().id},
+                            success: function (response) {
+
+                                $('.title').val(response.title);
+                                $('.description').val(response.description);
+                                $('.price').val(response.price);
+                                $('.placeholder').html('<img class="img-thumbnail"  width="300rem" src="{{\Illuminate\Support\Facades\Storage::url('images/')}}'+ response.image+'">');
+                            }
+                        });
+
+                        $('.add-product').submit(function(event) {
+                            event.preventDefault();
+
+                            productData = new FormData(this);
+
+                            $.ajax('/product',  {
+                                dataType: 'json',
+                                type: 'POST',
+                                data: formData,
+                                contentType: false,
+                                processData: false,
+                                success: function (response) {
+
+                                    location.href = '#products';
+                                    $('.title').val('');
+                                    $('.description').val('');
+                                    $('.price').val('');
+                                },
+                                error: function (response) {
+                                    //
+                                }
+                            });
+
+                        });
 
                         break;
 

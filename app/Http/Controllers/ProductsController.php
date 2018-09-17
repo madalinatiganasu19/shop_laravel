@@ -41,9 +41,10 @@ class ProductsController extends Controller
     public function product(Request $request) {
 
         $product = Product::query()->find($request->get('id'));
-        if ($request->post('save')) {
 
+        if ($request->post('save')) {
             if (!$request->get('id')) {
+
                 $request->validate([
                     'title' => 'required',
                     'description' => 'required|min:20',
