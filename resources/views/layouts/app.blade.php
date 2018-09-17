@@ -141,7 +141,7 @@
                             // Send email
 
                             $('.checkout-form').submit(function(event) {
-                                                               event.preventDefault();
+                                event.preventDefault();
 
                                 formData = $('.checkout-form').serialize();
 
@@ -151,7 +151,10 @@
                                     data: formData,
 
                                     success: function (response) {
-                                        location.href = '#';
+                                        //;
+                                        if (response.success) {
+                                            location.href = '#';
+                                        }
                                     },
                                     error: function (response) {
                                         //

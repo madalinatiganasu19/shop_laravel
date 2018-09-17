@@ -1,16 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @if (count($errors))
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
+    
     <!-- The index page -->
     <div class="page index">
         <!-- The index element where the products list is rendered -->
@@ -20,7 +11,7 @@
 
     <!-- The cart page -->
     <div class="page cart">
-        
+
         <!-- The cart element where the products list is rendered -->
         <table class="list"></table>
 

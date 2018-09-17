@@ -77,6 +77,9 @@ class IndexController extends Controller
         if ($request->post('checkout')) {
 
             if (!session('cart')) {
+                if ($request->ajax()) {
+                    return ['success' => false];
+                }
                 return redirect()->route('cart');
 
             } else {
@@ -85,6 +88,7 @@ class IndexController extends Controller
                     'email' => 'required|email',
                     'comments' => 'nullable|min:2'
                 ]);
+
 
                 //create a new order and store it to database
                 $order = new Order();
