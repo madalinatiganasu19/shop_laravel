@@ -80,26 +80,39 @@
 
     <div class="page product">
         <!-- The index element where the products list is rendered -->
-        <form class="my-4" method="POST">
+        <form class="my-4 add-product" method="POST" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="save" value="1">
 
             <div class="form-group">
-                <input class="form-control title" type="text" name="title" placeholder="{{__('Title')}}">
+                <input class="form-control title" type="text" name="title" placeholder="{{__('Title')}}" value="{{ request('id') ? old('title', $product->title) : old('title') }}">
             </div>
+
             <div class="form-group">
-                <textarea class="form-control description" rows="5" type="text" name="description" placeholder="{{__('Description')}}"></textarea>
+                <textarea class="form-control description" rows="5" type="text" name="description" placeholder="{{__('Description')}}">{{ request('id') ? old('description', $product->description) : old('description') }}</textarea>
             </div>
+
             <div class="form-group">
-                <input class="form-control price" type="text" name="price" placeholder="{{__('Price')}}">
+                <input class="form-control price" type="text" name="price" placeholder="{{__('Price')}}" value="{{ request('id') ? old('price', $product->price) : old('price') }}">
             </div>
+
             <div class="form-group">
-                <input type="file" name="image">
+                <div class="custom-file">
+                    <input type="file" name="image" class="custom-file-input image" id="validatedCustomFile">
+                    <label class="custom-file-label" for="validatedCustomFile">{{ __('Choose file...') }}</label>
+                </div>
             </div>
+
             <div class="form-group text-right">
-                <input class="btn btn-dark" type="submit" name="save" value="{{__('Save')}}">
+                <input class="btn btn-dark save" type="submit" name="save" value="{{__('Save')}}">
             </div>
         </form>
+
+        <div>
+            @if (request()->get('id'))
+                <img class="img-thumbnail" width="300rem" src="{{ \Illuminate\Support\Facades\Storage::url(('images/' . $product->image)) }}">
+            @endif
+        </div>
     </div>
 
     <div class="page orders">

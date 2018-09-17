@@ -23,6 +23,9 @@ class ProductsController extends Controller
             Storage::delete('public/images/' . $product->image);
             $product->delete();
 
+            if ($request->ajax()) {
+                return ['success' => true];
+            }
             return redirect()->route('products');
         }
 
@@ -38,7 +41,6 @@ class ProductsController extends Controller
     public function product(Request $request) {
 
         $product = Product::query()->find($request->get('id'));
-
         if ($request->post('save')) {
 
             if (!$request->get('id')) {
@@ -51,6 +53,7 @@ class ProductsController extends Controller
                 $product = new Product();
 
             } else {
+
                 $request->validate([
                     'title' => 'required',
                     'description' => 'required|min:20',
@@ -69,6 +72,10 @@ class ProductsController extends Controller
             }
 
             $product->save();
+
+            if ($request->ajax()) {
+                return ['success' => true];
+            }
 
             return redirect()->route('products');
         }

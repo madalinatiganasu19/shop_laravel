@@ -255,15 +255,28 @@
                         // Show the product page
                         $('.product').show();
                         //
-                        $.ajax('/product', {
-                            dataType: 'json',
-                            type: 'post',
-                            success: function (response) {
-                                $('form').submit(function (event) {
-                                    event.preventDefault();
-                                })
-                            }
+                        $('.add-product').submit(function(event) {
+                            event.preventDefault();
+
+                            productData = new FormData(this);
+
+                            $.ajax('/product',  {
+                                dataType: 'json',
+                                type: 'POST',
+                                data: productData,
+                                contentType: false,
+                                processData: false,
+                                success: function (response) {
+                                    console.log("success");
+                                },
+                                error: function (response) {
+                                    console.log("fail");
+                                }
+                            });
+
                         });
+
+
                         break;
 
                     case '#orders':
