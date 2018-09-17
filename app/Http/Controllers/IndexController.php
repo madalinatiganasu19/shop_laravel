@@ -99,6 +99,10 @@ class IndexController extends Controller
                 //send email
                 Mail::to($request->input('email'))->send($orderConfirmation);
                 session()->forget('cart');
+
+                if ($request->ajax()) {
+                    return ['success' => true];
+                }
                 return redirect()->route('index');
             }
         }
@@ -138,7 +142,7 @@ class IndexController extends Controller
         return view('pages.login');
     }
 
-    public function logout() {
+    public function logout(Request $request) {
         session()->forget('logged');
         return redirect()->route('index');
     }

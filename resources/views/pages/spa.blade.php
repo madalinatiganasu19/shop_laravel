@@ -1,6 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
+    @if (count($errors))
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
     <!-- The index page -->
     <div class="page index">
@@ -11,11 +20,14 @@
 
     <!-- The cart page -->
     <div class="page cart">
+        
         <!-- The cart element where the products list is rendered -->
         <table class="list"></table>
 
         <form class="checkout-form my-4" method="POST">
             @csrf
+            <input type="hidden" name="checkout" value="1">
+
             <div class="form-group">
                 <input class="form-control name" type="text" name="name" placeholder="{{__('Name')}}">
             </div>
@@ -31,7 +43,7 @@
         </form>
     </div>
 
-    <!-- The cart page -->
+    <!-- The login page -->
     <div class="page login">
         <!-- The cart element where the products list is rendered -->
         <div class="row justify-content-center">

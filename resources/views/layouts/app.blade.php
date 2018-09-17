@@ -141,7 +141,7 @@
                             // Send email
 
                             $('.checkout-form').submit(function(event) {
-                                event.preventDefault();
+                                                               event.preventDefault();
 
                                 formData = $('.checkout-form').serialize();
 
@@ -149,11 +149,12 @@
                                     dataType: 'json',
                                     type: 'POST',
                                     data: formData,
+
                                     success: function (response) {
-                                        //console.log(response);
+                                        location.href = '#';
                                     },
                                     error: function (response) {
-
+                                        //
                                     }
                                 });
 
