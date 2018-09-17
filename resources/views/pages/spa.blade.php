@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    
+
     <!-- The index page -->
     <div class="page index">
         <!-- The index element where the products list is rendered -->
@@ -45,21 +45,23 @@
                     <div class="card-body">
                         <form method="post" class="login-form">
                             @csrf
+                            <input type="hidden" name="login" value="1">
+
                             <div class="form-group">
                                 <div class="col-md-6 offset-3">
-                                    <input type="text" id ="email" class="form-control" placeholder="{{__('E-Mail Address')}}">
+                                    <input type="text" name="email" class="form-control email" placeholder="{{__('E-Mail Address')}}">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="col-md-6 offset-3">
-                                    <input type="password" id="password" class="form-control" placeholder="{{__('Password')}}">
+                                    <input type="password" name="password" class="form-control password" placeholder="{{__('Password')}}">
                                 </div>
                             </div>
 
                             <div class="form-group mb-0">
                                 <div class="col-md-8 offset-md-3">
-                                    <input type="submit" id="loginBtn" class="btn btn-dark" value="{{__('Login')}}">
+                                    <input type="submit" name="login" class="btn btn-dark login" value="{{__('Login')}}">
                                 </div>
                             </div>
                         </form>

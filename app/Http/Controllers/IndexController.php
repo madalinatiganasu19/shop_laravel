@@ -128,7 +128,6 @@ class IndexController extends Controller
     public function login(Request $request)
     {
         if ($request->post('login')) {
-
             $request->validate([
                 'email' => 'required|email',
                 'password' => 'required|min:6',
@@ -139,8 +138,16 @@ class IndexController extends Controller
 
             if($request->input('email') === $email && $request->input('password') === $password) {
                 session()->put('logged', $email);
+
+                if ($request->ajax()) {
+                    return ['success' => true];
+                }
                 return redirect()->route('products');
             }
+        }
+
+        if ($request->ajax()) {
+            return ['success' => false];
         }
 
         return view('pages.login');

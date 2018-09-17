@@ -151,7 +151,6 @@
                                     data: formData,
 
                                     success: function (response) {
-                                        //;
                                         if (response.success) {
                                             location.href = '#';
                                         }
@@ -189,13 +188,27 @@
                             }
                         });
 
-                        $(".login-form").submit(function (event) {
+                        $('.login-form').submit(function(event) {
                             event.preventDefault();
 
-                            email = $('#email').val();
-                            password = $('#password').val();
-                        });
+                            loginData = $('.login-form').serialize();
 
+                            $.ajax('/login',  {
+                                dataType: 'json',
+                                type: 'POST',
+                                data: loginData,
+
+                                success: function (response) {
+                                    if (response.success) {
+                                        location.href = '#products';
+                                    }
+                                },
+                                error: function (response) {
+                                    console.log("invalid credentials");
+                                }
+                            });
+
+                        });
                         break;
 
                     case '#products':
