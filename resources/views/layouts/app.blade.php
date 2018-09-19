@@ -302,7 +302,6 @@
                         $('.product').show();
 
                         $.ajax('/product', {
-                            //dataType: 'json',
                             success: function (response) {
                                 $('.alert').hide();
 
@@ -333,6 +332,55 @@
                                     $('.description').val('');
                                     $('.price').val('');
                                 },
+                                error: function (response) {
+                                    $('.alert').show();
+                                    renderListErrors(response);
+                                }
+                            });
+
+                        });
+                        break;
+
+                    case '#product?id='+getUrlVars().id+'':
+                        // Show the product page
+                        $('.product').show();
+
+                        // Load product details from the server and populate the form
+                        $.ajax('/product', {
+                            dataType: 'json',
+                            data: {'id': getUrlVars().id},
+                            success: function (response) {
+                                $('.alert').hide();
+
+                                $('.title').val(response.title);
+                                $('.description').val(response.description);
+                                $('.price').val(response.price);
+                                $('.placeholder_image').html('<img class="img-thumbnail"  width="300rem" src="{{\Illuminate\Support\Facades\Storage::url('images/')}}'+ response.image+'">');
+
+                            }
+                        });
+
+                        $('.add-product').submit(function(event) {
+                            event.preventDefault();
+
+                            productData = new FormData(this);
+
+                            $.ajax('/product?id='+getUrlVars().id+'',  {
+                                dataType: 'json',
+                                type: 'POST',
+                                data: productData,
+                                contentType: false,
+                                processData: false,
+                                success: function (response) {
+                                    location.href = '#products';
+                                    $('.alert').hide();
+
+                                    $('.title').val('');
+                                    $('.description').val('');
+                                    $('.price').val('');
+                                    $('.placeholder_image').html('');
+                                },
+
                                 error: function (response) {
                                     $('.alert').show();
                                     renderListErrors(response);
