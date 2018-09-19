@@ -17,8 +17,9 @@
 
     <!-- Custom JS script -->
     <script type="text/javascript">
-        function getUrlVars()
-        {
+
+        function getUrlVars() {
+
             var vars = [], hash;
             var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
 
@@ -116,6 +117,43 @@
                 return html;
             }
 
+            function renderListErrors(response) {
+                errors = response.responseJSON.errors;
+                error_list = [];
+
+                if (errors.hasOwnProperty('title')) {
+                    error_list += ['<p>' + errors.title + '</p>'].join();
+                }
+                if (errors.hasOwnProperty('description')) {
+                    error_list += ['<p>' + errors.description + '</p>'].join();
+                }
+                if (errors.hasOwnProperty('price')) {
+                    error_list += ['<p>' + errors.price + '</p>'].join();
+                }
+                if (errors.hasOwnProperty('image')) {
+                    error_list += ['<p>' + errors.image + '</p>'].join();
+                }
+
+                $('.alert').html(error_list);
+            }
+
+            function renderCheckoutErrors(response) {
+                errors = response.responseJSON.errors;
+                error_list = [];
+
+                if (errors.hasOwnProperty('name')) {
+                    error_list += ['<p>' + errors.name + '</p>'].join();
+                }
+                if (errors.hasOwnProperty('email')) {
+                    error_list += ['<p>' + errors.email + '</p>'].join();
+                }
+                if (errors.hasOwnProperty('comments')) {
+                    error_list += ['<p>' + errors.comments + '</p>'].join();
+                }
+
+                $('.alert').html(error_list);
+            }
+
             /**
              * URL hash change handler
              */
@@ -135,11 +173,11 @@
                                 success: function (response) {
                                     // Render the products in the cart list
                                     $('.cart .list').html(renderList(response, 'cart'));
+                                    $('.alert').hide();
                                 }
                             });
 
                             // Send email
-
                             $('.checkout-form').submit(function(event) {
                                 event.preventDefault();
 
@@ -153,10 +191,16 @@
                                     success: function (response) {
                                         if (response.success) {
                                             location.href = '#';
+                                            $('.alert').hide();
+
+                                            $('.name').val('');
+                                            $('.email').val('');
+                                            $('.comments').val('');
                                         }
                                     },
                                     error: function (response) {
-                                        //
+                                        $('.alert').show();
+                                        renderCheckoutErrors(response);
                                     }
                                 });
 
@@ -184,7 +228,7 @@
                         $.ajax('/login', {
                             dataType: 'json',
                             success: function (response) {
-                                //
+                                $('.alert').hide();
                             }
                         });
 
@@ -201,10 +245,25 @@
                                 success: function (response) {
                                     if (response.success) {
                                         location.href = '#products';
+                                        $('.alert').hide();
+
+                                        $('.email').val('');
+                                        $('.password').val('');
                                     }
                                 },
                                 error: function (response) {
-                                    console.log("invalid credentials");
+
+                                    errors = response.responseJSON.errors;
+                                    error_list = [];
+
+                                    if (errors.hasOwnProperty('email')) {
+                                        error_list += ['<p>' + errors.email + '</p>'].join();
+                                    }
+                                    if (errors.hasOwnProperty('password')) {
+                                        error_list += ['<p>' + errors.password + '</p>'].join();
+                                    }
+
+                                    $('.alert').show().html(error_list);
                                 }
                             });
 
@@ -243,11 +302,17 @@
                         $('.product').show();
 
                         $.ajax('/product', {
-                            dataType: 'json',
+                            //dataType: 'json',
                             success: function (response) {
-                                //
+                                $('.alert').hide();
+
+                                $('.title').val('');
+                                $('.description').val('');
+                                $('.price').val('');
+                                $('.placeholder_image').html('');
                             }
                         });
+
                         //
                         $('.add-product').submit(function(event) {
                             event.preventDefault();
@@ -262,56 +327,19 @@
                                 processData: false,
                                 success: function (response) {
                                     location.href = '#products';
-                                },
-                                error: function (response) {
-                                    //
-                                }
-                            });
+                                    $('.alert').hide();
 
-                        });
-                        break;
-
-                    case '#product?id='+getUrlVars().id+'':
-                        // Show the product page
-                        $('.product').show();
-                        // Load product details from the server and populate the form
-                        $.ajax('/product', {
-                            dataType: 'json',
-                            data: {'id': getUrlVars().id},
-                            success: function (response) {
-
-                                $('.title').val(response.title);
-                                $('.description').val(response.description);
-                                $('.price').val(response.price);
-                                $('.placeholder').html('<img class="img-thumbnail"  width="300rem" src="{{\Illuminate\Support\Facades\Storage::url('images/')}}'+ response.image+'">');
-                            }
-                        });
-
-                        $('.add-product').submit(function(event) {
-                            event.preventDefault();
-
-                            productData = new FormData(this);
-
-                            $.ajax('/product',  {
-                                dataType: 'json',
-                                type: 'POST',
-                                data: formData,
-                                contentType: false,
-                                processData: false,
-                                success: function (response) {
-
-                                    location.href = '#products';
                                     $('.title').val('');
                                     $('.description').val('');
                                     $('.price').val('');
                                 },
                                 error: function (response) {
-                                    //
+                                    $('.alert').show();
+                                    renderListErrors(response);
                                 }
                             });
 
                         });
-
                         break;
 
                     case '#orders':

@@ -11,6 +11,8 @@
 
     <!-- The cart page -->
     <div class="page cart">
+        <!-- Display errors -->
+        <div class="alert alert-danger"></div>
 
         <!-- The cart element where the products list is rendered -->
         <table class="list"></table>
@@ -36,6 +38,9 @@
 
     <!-- The login page -->
     <div class="page login">
+        <!-- Display errors -->
+        <div class="alert alert-danger"></div>
+
         <!-- The cart element where the products list is rendered -->
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -79,21 +84,24 @@
     </div>
 
     <div class="page product">
+        <!-- Display errors -->
+        <div class="alert alert-danger"></div>
+
         <!-- The index element where the products list is rendered -->
         <form class="my-4 add-product" method="POST" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="save" value="1">
 
             <div class="form-group">
-                <input class="form-control title" type="text" name="title" placeholder="{{__('Title')}}" value="{{ request('id') ? old('title', $product->title) : old('title') }}">
+                <input class="form-control title" type="text" name="title" placeholder="{{__('Title')}}">
             </div>
 
             <div class="form-group">
-                <textarea class="form-control description" rows="5" type="text" name="description" placeholder="{{__('Description')}}">{{ request('id') ? old('description', $product->description) : old('description') }}</textarea>
+                <textarea class="form-control description" rows="5" type="text" name="description" placeholder="{{__('Description')}}"></textarea>
             </div>
 
             <div class="form-group">
-                <input class="form-control price" type="text" name="price" placeholder="{{__('Price')}}" value="{{ request('id') ? old('price', $product->price) : old('price') }}">
+                <input class="form-control price" type="text" name="price" placeholder="{{__('Price')}}">
             </div>
 
             <div class="form-group">
@@ -104,11 +112,11 @@
             </div>
 
             <div class="form-group text-right">
-                <input class="btn btn-dark save" type="submit" name="save" value="{{__('Save')}}">
+                <input  type="submit" name="save" class="btn btn-dark save" value="{{__('Save')}}">
             </div>
         </form>
 
-        <div class="placeholder">
+        <div class="placeholder_image">
             @if (request()->get('id'))
                 <img class="img-thumbnail" width="300rem" src="{{ \Illuminate\Support\Facades\Storage::url(('images/' . $product->image)) }}">
             @endif
