@@ -154,6 +154,11 @@
                 $('.alert').html(error_list);
             }
 
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
             /**
              * URL hash change handler
              */
@@ -440,9 +445,9 @@
                         //logout
                         $.ajax('/logout',  {
                             dataType: 'json',
-
                             success: function (response) {
-                                    location.href = '#';
+                                location.href = '#';
+
                             },
                             error: function (response) {
                                 location.href = '#login';

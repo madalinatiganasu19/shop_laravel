@@ -18,7 +18,7 @@
         <table class="list"></table>
 
         <form class="checkout-form my-4" method="POST">
-            @csrf
+
             <input type="hidden" name="checkout" value="1">
 
             <div class="form-group">
@@ -49,7 +49,7 @@
 
                     <div class="card-body">
                         <form method="post" class="login-form">
-                            @csrf
+
                             <input type="hidden" name="login" value="1">
 
                             <div class="form-group">
@@ -89,7 +89,7 @@
 
         <!-- The index element where the products list is rendered -->
         <form class="my-4 add-product" method="POST" enctype="multipart/form-data">
-            @csrf
+            
             <input type="hidden" name="save" value="1">
 
             <div class="form-group">
