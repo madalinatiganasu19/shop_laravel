@@ -16,6 +16,10 @@ class CheckLogState
     public function handle($request, Closure $next)
     {
         if (!session('logged')) {
+
+            if ($request->ajax()) {
+                return ['success' => 'false'];
+            }
             return redirect()->route('login');
         }
 

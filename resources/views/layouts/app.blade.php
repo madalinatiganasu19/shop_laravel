@@ -279,6 +279,9 @@
                             success: function (response) {
                                 // Render the products in the products list
                                 $('.products .list').html(renderList(response, 'products'));
+                            },
+                            error: function (response) {
+                                location.href = '#login';
                             }
                         });
                         break;
@@ -293,6 +296,9 @@
                             success: function (response) {
                                 // Render the products in the order list
                                 location.href = '#products';
+                            },
+                            error: function (response) {
+                                location.href = '#login';
                             }
                         });
                         break;
@@ -309,6 +315,9 @@
                                 $('.description').val('');
                                 $('.price').val('');
                                 $('.placeholder_image').html('');
+                            },
+                            error: function (response) {
+                                location.href = '#login';
                             }
                         });
 
@@ -357,6 +366,9 @@
                                 $('.price').val(response.price);
                                 $('.placeholder_image').html('<img class="img-thumbnail"  width="300rem" src="{{\Illuminate\Support\Facades\Storage::url('images/')}}'+ response.image+'">');
 
+                            },
+                            error: function (response) {
+                                location.href = '#login';
                             }
                         });
 
@@ -399,6 +411,9 @@
                             success: function (response) {
                                 // Render the orders in the orders list
                                 $('.orders .list').html(renderOrders(response, 'orders'));
+                            },
+                            error: function (response) {
+                                location.href = '#login';
                             }
                         });
                         break;
@@ -414,6 +429,9 @@
                             success: function (response) {
                                 // Render the products in the order list
                                 $('.order .list').html(renderList(response, 'order'));
+                            },
+                            error: function (response) {
+                                location.href = '#login';
                             }
                         });
                         break;
@@ -424,10 +442,10 @@
                             dataType: 'json',
 
                             success: function (response) {
-                                if (response.success) {
                                     location.href = '#';
-
-                                }
+                            },
+                            error: function (response) {
+                                location.href = '#login';
                             }
                         });
 
