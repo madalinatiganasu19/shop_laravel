@@ -395,6 +395,7 @@
                                     $('.title').val('');
                                     $('.description').val('');
                                     $('.price').val('');
+                                    $('.image').val('');
                                     $('.placeholder_image').html('');
                                 },
 
