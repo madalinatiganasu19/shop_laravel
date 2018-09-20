@@ -140,7 +140,7 @@ class IndexController extends Controller
                 session()->put('logged', $email);
 
                 if ($request->ajax()) {
-                    return ['success' => true];
+                    return ['success' => $email];
                 }
                 return redirect()->route('products');
             }

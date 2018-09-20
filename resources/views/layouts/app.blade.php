@@ -19,10 +19,8 @@
     <script type="text/javascript">
 
         function getUrlVars() {
-
             var vars = [], hash;
             var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-
             for(var i = 0; i < hashes.length; i++)
             {
                 hash = hashes[i].split('=');
@@ -30,11 +28,13 @@
                 vars.push(hash[0]);
                 vars[hash[0]] = hash[1];
             }
-
             return vars;
         }
 
         $(document).ready(function () {
+
+            $('.auth').hide();
+            $('.guest').show();
 
             function renderList(products, location) {
                 html = [];
@@ -207,10 +207,13 @@
                     dataType: 'json',
                     type: 'POST',
                     data: loginData,
-
                     success: function (response) {
                         if (response.success) {
                             location.href = '#products';
+
+                            $('.guest').hide();
+                            $('#navbarDropdown').html(response.success);
+                            $('.auth').show();
 
                             $('.email').val('');
                             $('.password').val('');
@@ -244,6 +247,7 @@
              * URL hash change handler
              */
             window.onhashchange = function () {
+
                 // First hide all the pages
                 $('.page').hide();
 
@@ -265,7 +269,7 @@
 
                         break;
 
-                    case '#cart?id='+getUrlVars().id+'':
+                    case '#cart?id='+getUrlVars().id:
                         //remove product from cart
                         if (getUrlVars().id) {
                             $.ajax('/cart', {
@@ -410,6 +414,8 @@
                             success: function (response) {
                                 location.href = '#';
 
+                                $('.auth').hide();
+                                $('.guest').show();
                             },
                             error: function (response) {
                                 location.href = '#login';
@@ -431,17 +437,14 @@
                             });
                             break;
                         } else {
-
                             // Load the index products from the servers
                             $.ajax('/index', {
                                 dataType: 'json',
                                 success: function (response) {
                                     // Render the products in the index list
                                     $('.index .list').html(renderList(response, ''));
-
                                 }
                             });
-
                         }
                         break;
                 }
