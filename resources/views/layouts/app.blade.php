@@ -133,22 +133,6 @@
 
                 $('.alert').html(error_list);
             }
-            function renderCheckoutErrors(response) {
-                errors = response.responseJSON.errors;
-                error_list = [];
-
-                if (errors.hasOwnProperty('name')) {
-                    error_list += ['<p>' + errors.name + '</p>'].join();
-                }
-                if (errors.hasOwnProperty('email')) {
-                    error_list += ['<p>' + errors.email + '</p>'].join();
-                }
-                if (errors.hasOwnProperty('comments')) {
-                    error_list += ['<p>' + errors.comments + '</p>'].join();
-                }
-
-                $('.alert').html(error_list);
-            }
 
             //send email
             $('.checkout-form').submit(function(event) {
@@ -164,7 +148,6 @@
                     success: function (response) {
                         if (response.success) {
                             location.href = '#';
-                            $('.alert').hide();
 
                             $('.name').val('');
                             $('.email').val('');
@@ -172,8 +155,21 @@
                         }
                     },
                     error: function (response) {
-                        $('.alert').show();
-                        renderCheckoutErrors(response);
+
+                        errors = response.responseJSON.errors;
+                        error_list = [];
+
+                        if (errors.hasOwnProperty('name')) {
+                            error_list += ['<p>' + errors.name + '</p>'].join();
+                        }
+                        if (errors.hasOwnProperty('email')) {
+                            error_list += ['<p>' + errors.email + '</p>'].join();
+                        }
+                        if (errors.hasOwnProperty('comments')) {
+                            error_list += ['<p>' + errors.comments + '</p>'].join();
+                        }
+
+                        $('.alert').show().html(error_list);
                     }
                 });
 
@@ -192,7 +188,6 @@
                     processData: false,
                     success: function (response) {
                         location.href = '#products';
-                        $('.alert').hide();
                     },
 
                     error: function (response) {
@@ -216,7 +211,6 @@
                     success: function (response) {
                         if (response.success) {
                             location.href = '#products';
-                            $('.alert').hide();
 
                             $('.email').val('');
                             $('.password').val('');
