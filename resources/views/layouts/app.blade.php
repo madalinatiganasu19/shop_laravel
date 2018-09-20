@@ -311,7 +311,7 @@
                         });
                         break;
 
-                    case '#products?id='+getUrlVars().id+'':
+                    case '#products?id='+getUrlVars().id:
                         //take product id
                         id = getUrlVars().id;
                         // Delete product
@@ -350,7 +350,7 @@
                         //
                         break;
 
-                    case '#product?id='+getUrlVars().id+'':
+                    case '#product?id='+getUrlVars().id:
                         // Show the product page
                         $('.product').show();
 
@@ -389,7 +389,7 @@
                         });
                         break;
 
-                    case '#order?id='+getUrlVars().id+'':
+                    case '#order?id='+getUrlVars().id:
                         // Show the order page
                         $('.order').show();
                         id = getUrlVars().id;
