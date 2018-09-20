@@ -34,7 +34,6 @@
             return vars;
         }
 
-
         $(document).ready(function () {
 
             function renderList(products, location) {
@@ -77,7 +76,6 @@
 
                 return html;
             }
-
             function renderOrders(orders, location) {
                 html = [
                     '<tr class="bg-dark text-white text-center">',
@@ -116,7 +114,6 @@
 
                 return html;
             }
-
             function renderListErrors(response) {
                 errors = response.responseJSON.errors;
                 error_list = [];
@@ -136,7 +133,6 @@
 
                 $('.alert').html(error_list);
             }
-
             function renderCheckoutErrors(response) {
                 errors = response.responseJSON.errors;
                 error_list = [];
@@ -154,6 +150,97 @@
                 $('.alert').html(error_list);
             }
 
+            //send email
+            $('.checkout-form').submit(function(event) {
+                event.preventDefault();
+
+                formData = $('.checkout-form').serialize();
+
+                $.ajax('/cart',  {
+                    dataType: 'json',
+                    type: 'POST',
+                    data: formData,
+
+                    success: function (response) {
+                        if (response.success) {
+                            location.href = '#';
+                            $('.alert').hide();
+
+                            $('.name').val('');
+                            $('.email').val('');
+                            $('.comments').val('');
+                        }
+                    },
+                    error: function (response) {
+                        $('.alert').show();
+                        renderCheckoutErrors(response);
+                    }
+                });
+
+            });
+            //add or update product
+            $('.add-product').submit(function(event) {
+                event.preventDefault();
+
+                productData = new FormData(this);
+
+                $.ajax('/product' + (getUrlVars().id ? '?id='+getUrlVars().id : ''),  {
+                    dataType: 'json',
+                    type: 'POST',
+                    data: productData,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        location.href = '#products';
+                        $('.alert').hide();
+                    },
+
+                    error: function (response) {
+                        $('.alert').show();
+                        renderListErrors(response);
+                    }
+                });
+
+            });
+            //login
+            $('.login-form').submit(function(event) {
+                event.preventDefault();
+
+                loginData = $('.login-form').serialize();
+
+                $.ajax('/login',  {
+                    dataType: 'json',
+                    type: 'POST',
+                    data: loginData,
+
+                    success: function (response) {
+                        if (response.success) {
+                            location.href = '#products';
+                            $('.alert').hide();
+
+                            $('.email').val('');
+                            $('.password').val('');
+                        }
+                    },
+                    error: function (response) {
+
+                        errors = response.responseJSON.errors;
+                        error_list = [];
+
+                        if (errors.hasOwnProperty('email')) {
+                            error_list += ['<p>' + errors.email + '</p>'].join();
+                        }
+                        if (errors.hasOwnProperty('password')) {
+                            error_list += ['<p>' + errors.password + '</p>'].join();
+                        }
+
+                        $('.alert').show().html(error_list);
+                    }
+                });
+
+            });
+
+            //add csrf
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -182,35 +269,6 @@
                                 }
                             });
 
-                            // Send email
-                            $('.checkout-form').submit(function(event) {
-                                event.preventDefault();
-
-                                formData = $('.checkout-form').serialize();
-
-                                $.ajax('/cart',  {
-                                    dataType: 'json',
-                                    type: 'POST',
-                                    data: formData,
-
-                                    success: function (response) {
-                                        if (response.success) {
-                                            location.href = '#';
-                                            $('.alert').hide();
-
-                                            $('.name').val('');
-                                            $('.email').val('');
-                                            $('.comments').val('');
-                                        }
-                                    },
-                                    error: function (response) {
-                                        $('.alert').show();
-                                        renderCheckoutErrors(response);
-                                    }
-                                });
-
-                            });
-
                         break;
 
                     case '#cart?id='+getUrlVars().id+'':
@@ -237,42 +295,6 @@
                             }
                         });
 
-                        $('.login-form').submit(function(event) {
-                            event.preventDefault();
-
-                            loginData = $('.login-form').serialize();
-
-                            $.ajax('/login',  {
-                                dataType: 'json',
-                                type: 'POST',
-                                data: loginData,
-
-                                success: function (response) {
-                                    if (response.success) {
-                                        location.href = '#products';
-                                        $('.alert').hide();
-
-                                        $('.email').val('');
-                                        $('.password').val('');
-                                    }
-                                },
-                                error: function (response) {
-
-                                    errors = response.responseJSON.errors;
-                                    error_list = [];
-
-                                    if (errors.hasOwnProperty('email')) {
-                                        error_list += ['<p>' + errors.email + '</p>'].join();
-                                    }
-                                    if (errors.hasOwnProperty('password')) {
-                                        error_list += ['<p>' + errors.password + '</p>'].join();
-                                    }
-
-                                    $('.alert').show().html(error_list);
-                                }
-                            });
-
-                        });
                         break;
 
                     case '#products':
@@ -319,7 +341,8 @@
                                 $('.title').val('');
                                 $('.description').val('');
                                 $('.price').val('');
-                                $('.placeholder_image').html('');
+                                $('.image').val('');
+                                $('.placeholder_image').html('')
                             },
                             error: function (response) {
                                 location.href = '#login';
@@ -327,32 +350,6 @@
                         });
 
                         //
-                        $('.add-product').submit(function(event) {
-                            event.preventDefault();
-
-                            productData = new FormData(this);
-
-                            $.ajax('/product',  {
-                                dataType: 'json',
-                                type: 'POST',
-                                data: productData,
-                                contentType: false,
-                                processData: false,
-                                success: function (response) {
-                                    location.href = '#products';
-                                    $('.alert').hide();
-
-                                    $('.title').val('');
-                                    $('.description').val('');
-                                    $('.price').val('');
-                                },
-                                error: function (response) {
-                                    $('.alert').show();
-                                    renderListErrors(response);
-                                }
-                            });
-
-                        });
                         break;
 
                     case '#product?id='+getUrlVars().id+'':
@@ -375,36 +372,6 @@
                             error: function (response) {
                                 location.href = '#login';
                             }
-                        });
-
-                        $('.add-product').submit(function(event) {
-                            event.preventDefault();
-
-                            productData = new FormData(this);
-
-                            $.ajax('/product?id='+getUrlVars().id+'',  {
-                                dataType: 'json',
-                                type: 'POST',
-                                data: productData,
-                                contentType: false,
-                                processData: false,
-                                success: function (response) {
-                                    location.href = '#products';
-                                    $('.alert').hide();
-
-                                    $('.title').val('');
-                                    $('.description').val('');
-                                    $('.price').val('');
-                                    $('.image').val('');
-                                    $('.placeholder_image').html('');
-                                },
-
-                                error: function (response) {
-                                    $('.alert').show();
-                                    renderListErrors(response);
-                                }
-                            });
-
                         });
                         break;
 
