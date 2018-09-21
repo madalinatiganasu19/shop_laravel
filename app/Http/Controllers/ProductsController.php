@@ -13,8 +13,8 @@ class ProductsController extends Controller
 
     }
 
-    public function products(Request $request) {
-
+    public function products(Request $request)
+    {
         if ($request->get('id')) {
 
             $id = $request->get('id');
@@ -38,8 +38,8 @@ class ProductsController extends Controller
         return view('products.products')->with('products', $products);
     }
 
-    public function product(Request $request) {
-
+    public function product(Request $request)
+    {
         $product = Product::query()->find($request->get('id'));
 
         if ($request->post('save')) {

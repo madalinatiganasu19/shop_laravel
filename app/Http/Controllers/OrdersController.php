@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\DB;
 
 class OrdersController extends Controller
 {
-    public function orders(Request $request) {
+    public function orders(Request $request)
+    {
         $orders = new Order();
 
         $orders = DB::table($orders->getTable())
@@ -27,7 +28,8 @@ class OrdersController extends Controller
         ]);
     }
 
-    public function order(Request $request) {
+    public function order(Request $request)
+    {
 
         $order = Order::query()->find($request->get('id'));
         $products = $order->products;
