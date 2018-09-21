@@ -331,7 +331,6 @@
                             dataType: 'json',
                             data: {'id': getUrlVars().id},
                             success: function (response) {
-                                // Render the products in the order list
                                 location.href = '#products';
                             },
                             error: function (response) {
