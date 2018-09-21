@@ -33,8 +33,20 @@
 
         $(document).ready(function () {
 
-            $('.auth').hide();
-            $('.guest').show();
+            $.ajax('/check',  {
+                dataType: 'json',
+                success: function (response) {
+
+                    if (response.success) {
+                        $('#navbarDropdown').html(response.success);
+                        $('.auth').show();
+                        $('.guest').hide();
+                    } else {
+                        $('.auth').hide();
+                        $('.guest').show();
+                    }
+                }
+            });
 
             function renderList(products, location) {
                 html = [];
@@ -243,6 +255,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+
             /**
              * URL hash change handler
              */
@@ -409,7 +422,7 @@
 
                     case '#logout':
                         //logout
-                        $.ajax('/logout',  {
+                        $.ajax('/logout' ,  {
                             dataType: 'json',
                             success: function (response) {
                                 location.href = '#';
@@ -418,9 +431,10 @@
                                 $('.guest').show();
                             },
                             error: function (response) {
-                                location.href = '#login';
+                                 location.href = '#login';
                             }
                         });
+                        break;
 
                     default:
                         // If all else fails, always default to index
@@ -435,7 +449,7 @@
                                     location.href = '#';
                                 }
                             });
-                            break;
+
                         } else {
                             // Load the index products from the servers
                             $.ajax('/index', {

@@ -42,7 +42,6 @@ class IndexController extends Controller
         return view('pages.index')->with('products', $query->get());
     }
 
-
     /**
      * Display a listing of the session cart resources.
      * @param  \Illuminate\Http\Request $request
@@ -128,6 +127,7 @@ class IndexController extends Controller
     public function login(Request $request)
     {
         if ($request->post('login')) {
+
             $request->validate([
                 'email' => 'required|email',
                 'password' => 'required|min:6',
@@ -140,7 +140,7 @@ class IndexController extends Controller
                 session()->put('logged', $email);
 
                 if ($request->ajax()) {
-                    return ['success' => $email];
+                    return ['success' => session('logged')];
                 }
                 return redirect()->route('products');
             }
@@ -153,7 +153,8 @@ class IndexController extends Controller
         return view('pages.login');
     }
 
-    public function logout(Request $request) {
+    public function logout(Request $request)
+    {
         session()->forget('logged');
 
         if ($request->ajax()) {
@@ -162,7 +163,16 @@ class IndexController extends Controller
         return redirect()->route('index');
     }
 
-    public function spa() {
+    public function check(Request $request)
+    {
+        if ($request->ajax()) {
+            return ['success' => session('logged') ? session('logged') : false];
+        }
+        return redirect()->route(session('logged') ? 'products' : 'index' );
+    }
+
+    public function spa()
+    {
         return view('pages.spa');
     }
 

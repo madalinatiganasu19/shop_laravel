@@ -19,6 +19,7 @@ Route::get('/', function() {
 })->name('welcome');
 
 Route::get('/spa', 'IndexController@spa')->name('spa');
+Route::get('/check', 'IndexController@check')->name('check');
 
 Route::get('/index', 'IndexController@index')->name('index');
 Route::get('/cart', 'IndexController@cart')->name('cart');
@@ -35,3 +36,4 @@ Route::post('/product', 'ProductsController@product')->name('save')->middleware(
 
 Route::get('/orders', 'OrdersController@orders')->name('orders')->middleware(CheckLogState::class);
 Route::get('/order', 'OrdersController@order')->name('order')->middleware(CheckLogState::class);
+
