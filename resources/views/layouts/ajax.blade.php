@@ -35,35 +35,35 @@
                 $.each(products, function (key, product) {
                     html += [
                         '<tr>',
-                        '<td>',
-                        '<img class="img-thumbnail" src="{{\Illuminate\Support\Facades\Storage::url('images/')}}'+ product.image+'">',
-                        '</td>',
-                        '<td>&nbsp;&nbsp;&nbsp;</td>',
-                        '<td>',
-                        '<p class="lead">' + product.title + '</p>',
-                        '<p>' + product.description + '</p>',
-                        '<p class="lead"> {{ __('$') }}' + product.price + '</p>',
-                        '</td>',
-                        '<td>&nbsp;&nbsp;&nbsp;</td>'
+                            '<td>',
+                                '<img class="img-thumbnail" src="{{\Illuminate\Support\Facades\Storage::url('images/')}}'+ product.image+'">',
+                            '</td>',
+                            '<td>&nbsp;&nbsp;&nbsp;</td>',
+                            '<td>',
+                                '<p class="lead">' + product.title + '</p>',
+                                '<p>' + product.description + '</p>',
+                                '<p class="lead"> {{ __('$') }}' + product.price + '</p>',
+                            '</td>',
+                            '<td>&nbsp;&nbsp;&nbsp;</td>'
                     ].join('');
 
                     if (location === '') {
                         html += [
                             '<td class="text-center">',
-                            '<a href="#?id='+ product.id +'" class="btn btn-sm btn-dark">{{__('Add to Cart')}}</a>',
+                                '<a href="#?id='+ product.id +'" class="btn btn-sm btn-dark">{{__('Add to Cart')}}</a>',
                             '</td>'
                         ].join('');
                     } else if (location === 'cart') {
                         html += [
                             '<td class="text-center">',
-                            '<a href="#cart?id='+ product.id +'" class="btn btn-sm btn-dark">{{__('Remove from Cart')}}</a>',
+                                '<a href="#cart?id='+ product.id +'" class="btn btn-sm btn-dark">{{__('Remove from Cart')}}</a>',
                             '</td>'
                         ].join('');
                     } else if (location === 'products') {
                         html += [
                             '<td class="text-center">',
-                            '<a href="#product?id='+ product.id +'" class="btn btn-sm btn-success my-1">{{__('Update')}}</a>',
-                            '<a href="#products?id='+ product.id +'" class="btn btn-sm btn-danger my-1">{{__('Delete')}}</a>',
+                                '<a href="#product?id='+ product.id +'" class="btn btn-sm btn-success my-1">{{__('Update')}}</a>',
+                                '<a href="#products?id='+ product.id +'" class="btn btn-sm btn-danger my-1">{{__('Delete')}}</a>',
                             '</td>'
                         ].join('');
                     }
@@ -76,40 +76,40 @@
             function renderOrders(orders) {
                 var html = [
                     '<tr class="bg-dark text-white text-center">',
-                    '<th>',
-                    '<p class="lead">{{__('NAME')}}</p>',
-                    '</th>',
-                    '<th>&nbsp;&nbsp;&nbsp;</th>',
-                    '<th>',
-                    '<p class="lead">{{__('EMAIL')}}</p>',
-                    '</th>',
-                    '<th>&nbsp;&nbsp;&nbsp;</th>',
-                    '<th>',
-                    '<p class="lead">{{__('TOTAL')}}</p>',
-                    '</th>',
-                    '<th></th>',
-                    '<th></th>',
+                        '<th>',
+                            '<p class="lead">{{__('NAME')}}</p>',
+                        '</th>',
+                        '<th>&nbsp;&nbsp;&nbsp;</th>',
+                        '<th>',
+                            '<p class="lead">{{__('EMAIL')}}</p>',
+                        '</th>',
+                        '<th>&nbsp;&nbsp;&nbsp;</th>',
+                        '<th>',
+                            '<p class="lead">{{__('TOTAL')}}</p>',
+                        '</th>',
+                        '<th></th>',
+                        '<th></th>',
                     '</tr>'
                 ].join('');
 
                 $.each(orders, function (key, order) {
                     html += [
                         '<tr>',
-                        '<td>',
-                        '<p >' + order.name + '</p>',
-                        '</td>',
-                        '<td>&nbsp;&nbsp;&nbsp;</td>',
-                        '<td>',
-                        '<p>' + order.email + '</p>',
-                        '</td>',
-                        '<td>&nbsp;&nbsp;&nbsp;</td>',
-                        '<td>',
-                        '<p > {{ __("$") }}' + order.total + '</p>',
-                        '</td>',
-                        '<td>&nbsp;&nbsp;&nbsp;</td>',
-                        '<td class="text-center">',
-                        '<a href="#order?id='+ order.id +'" class="btn btn-sm btn-dark">{{__('View Order')}}</a>',
-                        '</td>',
+                            '<td>',
+                                '<p >' + order.name + '</p>',
+                            '</td>',
+                            '<td>&nbsp;&nbsp;&nbsp;</td>',
+                            '<td>',
+                                '<p>' + order.email + '</p>',
+                            '</td>',
+                            '<td>&nbsp;&nbsp;&nbsp;</td>',
+                            '<td>',
+                                '<p > {{ __("$") }}' + order.total + '</p>',
+                            '</td>',
+                            '<td>&nbsp;&nbsp;&nbsp;</td>',
+                            '<td class="text-center">',
+                                '<a href="#order?id='+ order.id +'" class="btn btn-sm btn-dark">{{__('View Order')}}</a>',
+                            '</td>',
                         '</tr>'
                     ].join('');
 
