@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@section('script')
+    @include('layouts.ajax')
+@endsection()
+
+
 @section('content')
 
     <!-- The index page -->
